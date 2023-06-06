@@ -17,6 +17,8 @@ jobs:
               cd dist
               ln -s index.html 404.html
               echo pc-auto.cheuksblog.ca > CNAME
+              git config --global user.name "Github Actions"
+              git config --global user.email "me@cheuksblog.ca"
               git init
               git add -A
               git commit -m "Deploying at $(date)"

@@ -1,0 +1,16 @@
+name: Various checks before commits are merged
+on: push
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up npm
+        run: npm ci
+      - name: Type check
+        run: npm run type-check
+      - name: Lint
+        run: npm run lint-no-fix
+      - name: Format check
+        run: npm run format-no-fix
