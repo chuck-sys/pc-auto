@@ -114,3 +114,8 @@ bridges.
 
 Another issue would be how we know when a line is too long and we must break it. Or when there are too
 many lines such that we need a new slide (the case with the scriptures).
+
+## API references
+
+- Song database: https://cantonhymn.net
+- RCUV: http://rcuv.hkbs.org.hk
