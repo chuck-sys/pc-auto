@@ -1,4 +1,4 @@
-import { Part } from './parts';
+import type { Part } from './parts';
 
 interface SongPart {
   identifier: string;
