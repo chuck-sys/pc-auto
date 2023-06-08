@@ -14,3 +14,5 @@ jobs:
         run: npm run lint-no-fix
       - name: Format check
         run: npm run format-no-fix
+      - name: Unit test
+        run: npm run test
