@@ -4,23 +4,23 @@ const CantohymnBaseApiUri: string = 'https://cantonhymn.net/api';
  * A Cantohymn song, according to their API.
  */
 interface CantohymnSong {
-  songId: number,
-  slug: string,
-  parentSlug: string | null,
-  title: string,
-  person: string,
-  source: string,
-  lyrics: string,
-  featuredVideoLink: string,
-  thumbnail: string,
-  hasChordPattern: boolean,
-  songType: number,
-  songIconType: number,
-  create_datetime: string,
-  create_date: string,
-  update_datetime: string,
-  update_date: string,
-  author: string,
+  songId: number;
+  slug: string;
+  parentSlug: string | null;
+  title: string;
+  person: string;
+  source: string;
+  lyrics: string;
+  featuredVideoLink: string;
+  thumbnail: string;
+  hasChordPattern: boolean;
+  songType: number;
+  songIconType: number;
+  create_datetime: string;
+  create_date: string;
+  update_datetime: string;
+  update_date: string;
+  author: string;
 }
 
 /**
@@ -29,7 +29,7 @@ interface CantohymnSong {
  * May require some tweaking if it starts to not work.
  */
 export async function searchSongsWithFilter(words: string): Promise<CantohymnSong[]> {
-  let uri = new URL(CantohymnBaseApiUri + '/advanced-search-songs.php');
+  const uri = new URL(CantohymnBaseApiUri + '/advanced-search-songs.php');
   uri.searchParams.append('generalType', 'all');
   uri.searchParams.append('recommendType', 'latest');
   uri.searchParams.append('filter1_target', 'any');
