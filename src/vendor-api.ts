@@ -53,7 +53,10 @@ export async function searchSongsWithFilter(words: string): Promise<CantohymnSon
  * **NOTE**: Everything is hard-coded. The end-point uses RCUV; if you want to change it, you could. This
  * should do the trick for our MVP.
  */
-export async function getBibleChapterAsString(bookShorthand: string, chapter: number): Promise<string> {
+export async function getBibleChapterAsString(
+  bookShorthand: string,
+  chapter: number
+): Promise<string> {
   const uri = new URL(RCUVBaseApiUri + '/' + bookShorthand + '/' + chapter);
   const resp = await fetch(uri);
   return resp.text();
