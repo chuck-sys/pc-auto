@@ -1,4 +1,5 @@
 const CantohymnBaseApiUri: string = 'https://cantonhymn.net/api';
+const RCUVBaseApiUri: string = 'http://rcuv.hkbs.org.hk/bb/RCUV1';
 
 /**
  * A Cantohymn song, according to their API.
@@ -44,4 +45,16 @@ export async function searchSongsWithFilter(words: string): Promise<CantohymnSon
   } else {
     return [];
   }
+}
+
+/**
+ * Get an entire chapter of the bible.
+ *
+ * **NOTE**: Everything is hard-coded. The end-point uses RCUV; if you want to change it, you could. This
+ * should do the trick for our MVP.
+ */
+export async function getBibleChapterAsString(bookShorthand: string, chapter: number): Promise<string> {
+  const uri = new URL(RCUVBaseApiUri + '/' + bookShorthand + '/' + chapter);
+  const resp = await fetch(uri);
+  return resp.text();
 }
