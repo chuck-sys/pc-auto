@@ -43,7 +43,25 @@ export async function searchSongsWithFilter(words: string): Promise<CantohymnSon
   if (json.success) {
     return json.data.songs;
   } else {
-    return [];
+    throw new Error('Invalid JSON');
+  }
+}
+
+/**
+ * Get song details based on given slug.
+ *
+ * Must match the slug exactly. Slug doesn't need to be URL-encoded.
+ */
+export async function getSongDetails(slug: string): Promise<CantohymnSong> {
+  const uri = new URL(CantohymnBaseApiUri + '/song-detail.php');
+  uri.searchParams.append('slug', slug);
+
+  const resp = await fetch(uri);
+  const json = await resp.json();
+  if (json.success) {
+    return json.data.currentSong;
+  } else {
+    throw new Error('Invalid JSON');
   }
 }
 
