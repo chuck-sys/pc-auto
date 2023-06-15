@@ -72,6 +72,46 @@ note that it is basically the `song` data from the [save data](#save-data) verba
 ensure is that a single save data object is able to reproduce the powerpoint completely, even if there is
 no internet.
 
+Below are the lyrics which directly convert to the `parts` key.
+
+```
+Verse:
+每次我難關當中
+祢定與我同行
+來分享生命的豐富
+來讓我蒙福
+
+每次我煩憂當中
+祢為我已籌謀
+平安盼望在我心裡
+前路共祢同闖
+
+Chorus:
+祢是永遠心裡依靠
+信心堅守去宣告
+親身經歷感受
+全是祢大能
+
+唯獨祢是永遠心裡依靠
+信心堅守去宣告
+當我專注的跪拜
+祢的恩典已在這裡
+```
+
+Each part of the song is identified by an identifier that doesn't need to be unique, which is denoted by
+having the line
+
+1. Be the beginning of a new paragraph
+2. End with a colon
+
+Do note that lines which are not identifying lines now cannot end in a colon.
+
+A part of a song can be represented by multiple slides, which translate to paragraphs separated by 1 or
+more empty lines.
+
+In the example given above, the two identifiers `Verse` and `Chorus` denote the beginning of the two
+parts. Both parts consist of 2 slides, which consist of 4 lines.
+
 ## Save data
 
 Below is an example of the data required to create a presentation. This is the data that will be fed into

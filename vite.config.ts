@@ -6,6 +6,14 @@ import vue from '@vitejs/plugin-vue';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
+  define: {
+    'import.meta.vitest': false,
+  },
+  test: {
+    includeSource: [
+      'src/**/*.ts'
+    ]
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
