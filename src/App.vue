@@ -1,47 +1,52 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue';
-import TheWelcome from './components/TheWelcome.vue';
+import { ref } from 'vue';
+import { getSongDetails } from './vendor-api';
+import { formattedLyricsToSongParts } from './store';
+import type { Song } from './store';
+import type { Ref } from 'vue';
+
+let songSlug = ref('');
+let songText = ref('');
+let songStructure: Ref<Song> = ref({
+  title: '',
+  artist: '',
+  lyricist: '',
+  parts: [],
+});
+
+async function onSubmitSongSlug() {
+  const song = await getSongDetails(songSlug.value);
+  songStructure.value.title = songSlug.value;
+  songStructure.value.artist = song.person;
+  songStructure.value.lyricist = song.person;
+  songText.value = song.lyrics;
+}
+
+async function onEditSongText() {
+  songStructure.value.parts = formattedLyricsToSongParts(songText.value);
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <input type="text" :model="songSlug" placeholder="Song Slug" @keyup.enter="onSubmitSongSlug" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+  <textarea cols="30" rows="10" :model="songText" @change="onEditSongText"></textarea>
 
-  <main>
-    <TheWelcome />
-  </main>
+  <section>
+    <p>{{ songStructure.title }}</p>
+    <p>{{ songStructure.artist }} - {{ songStructure.lyricist }}</p>
+
+    <section v-for="part in songStructure.parts">
+      <p>{{ part.identifier }}</p>
+
+      <section v-for="(slideLyrics, i) in part.lyricsBySlide">
+        <p>Slide {{ i }}</p>
+
+        <p v-for="line in slideLyrics">{{ line }}</p>
+      </section>
+    </section>
+  </section>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>

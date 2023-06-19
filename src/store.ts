@@ -1,20 +1,23 @@
 import type { Part } from './parts';
 
-type SlideLyrics = Array<string>;
+export type SlideLyrics = Array<string>;
 
-interface SongPart {
+export interface SongPart {
   identifier: string;
   lyricsBySlide: Array<SlideLyrics>;
 }
 
-interface Song {
+/**
+ * Also used to cache any songs.
+ */
+export interface Song {
   title: string;
   artist: string;
   lyricist: string;
   parts: Array<SongPart>;
 }
 
-interface Scripture {
+export interface Scripture {
   identifier: string;
   verses: Array<string>;
 }
@@ -33,7 +36,7 @@ export interface PresentationConfig {
  *
  * Doesn't remove chords if any exist.
  */
-function formattedLyricsToSongParts(lyrics: string): Array<SongPart> {
+export function formattedLyricsToSongParts(lyrics: string): Array<SongPart> {
   const parts: Array<SongPart> = [];
 
   let isPreviousLineEmpty = true;

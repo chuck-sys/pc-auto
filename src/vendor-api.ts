@@ -4,7 +4,7 @@ const RCUVBaseApiUri: string = 'http://rcuv.hkbs.org.hk/bb/RCUV1';
 /**
  * A Cantohymn song, according to their API.
  */
-interface CantohymnSong {
+export interface CantohymnSong {
   songId: number;
   slug: string;
   parentSlug: string | null;

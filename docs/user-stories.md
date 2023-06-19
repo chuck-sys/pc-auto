@@ -12,6 +12,11 @@
 - Customize the order of songs, and have them interleave between liturgy
 - Specify the bible verse and have the site automatically insert slides
 
+## As a developer
+
+- Get song lyrics and edit the lyrics in some editor
+- Download the song file itself
+
 # Theoretical user workflow
 
 1. Open the site
