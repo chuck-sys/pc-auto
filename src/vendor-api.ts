@@ -1,5 +1,4 @@
-const CantohymnBaseApiUri: string = 'https://cantonhymn.net/api';
-const RCUVBaseApiUri: string = 'http://rcuv.hkbs.org.hk/bb/RCUV1';
+const NetlifyFunctionsBaseUri = '/.netlify/functions';
 
 /**
  * A Cantohymn song, according to their API.
@@ -30,7 +29,7 @@ export interface CantohymnSong {
  * May require some tweaking if it starts to not work.
  */
 export async function searchSongsWithFilter(words: string): Promise<CantohymnSong[]> {
-  const uri = new URL(CantohymnBaseApiUri + '/advanced-search-songs.php');
+  const uri = new URL(NetlifyFunctionsBaseUri + '/search-songs-with-filter', window.location.href);
   uri.searchParams.append('generalType', 'all');
   uri.searchParams.append('recommendType', 'latest');
   uri.searchParams.append('filter1_target', 'any');
@@ -40,7 +39,7 @@ export async function searchSongsWithFilter(words: string): Promise<CantohymnSon
 
   const resp = await fetch(uri);
   const json = await resp.json();
-  if (json.success) {
+  if (resp.ok) {
     return json.data.songs;
   } else {
     throw new Error('Invalid JSON');
@@ -53,13 +52,13 @@ export async function searchSongsWithFilter(words: string): Promise<CantohymnSon
  * Must match the slug exactly. Slug doesn't need to be URL-encoded.
  */
 export async function getSongDetails(slug: string): Promise<CantohymnSong> {
-  const uri = new URL(CantohymnBaseApiUri + '/song-detail.php');
+  const uri = new URL(NetlifyFunctionsBaseUri + '/get-song-details', window.location.href);
   uri.searchParams.append('slug', slug);
 
   const resp = await fetch(uri);
   const json = await resp.json();
-  if (json.success) {
-    return json.data.currentSong;
+  if (resp.ok) {
+    return json;
   } else {
     throw new Error('Invalid JSON');
   }
@@ -75,7 +74,8 @@ export async function getBibleChapterAsString(
   bookShorthand: string,
   chapter: number
 ): Promise<string> {
-  const uri = new URL(RCUVBaseApiUri + '/' + bookShorthand + '/' + chapter);
+  // FIXME BROKEN
+  const uri = new URL(NetlifyFunctionsBaseUri + '/' + bookShorthand + '/' + chapter, window.location.href);
   const resp = await fetch(uri);
   return resp.text();
 }

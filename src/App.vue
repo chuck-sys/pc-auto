@@ -28,21 +28,21 @@ async function onEditSongText() {
 </script>
 
 <template>
-  <input type="text" :model="songSlug" placeholder="Song Slug" @keyup.enter="onSubmitSongSlug" />
+  <input type="text" v-model="songSlug" placeholder="Song Slug" @keyup.enter="onSubmitSongSlug" />
 
-  <textarea cols="30" rows="10" :model="songText" @change="onEditSongText"></textarea>
+  <textarea cols="30" rows="10" v-model="songText" @change="onEditSongText"></textarea>
 
   <section>
     <p>{{ songStructure.title }}</p>
     <p>{{ songStructure.artist }} - {{ songStructure.lyricist }}</p>
 
-    <section v-for="part in songStructure.parts">
+    <section v-for="part in songStructure.parts" :key="part.identifier">
       <p>{{ part.identifier }}</p>
 
-      <section v-for="(slideLyrics, i) in part.lyricsBySlide">
+      <section v-for="(slideLyrics, i) in part.lyricsBySlide" :key="i">
         <p>Slide {{ i }}</p>
 
-        <p v-for="line in slideLyrics">{{ line }}</p>
+        <p v-for="line in slideLyrics" :key="line">{{ line }}</p>
       </section>
     </section>
   </section>
