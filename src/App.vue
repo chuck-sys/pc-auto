@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { getSongDetails } from './vendor-api';
 import { formattedLyricsToSongParts } from './store';
+import pptxgen from 'pptxgenjs';
 import type { Song } from './store';
 import type { Ref } from 'vue';
 
@@ -11,8 +12,9 @@ let songStructure: Ref<Song> = ref({
   title: '',
   artist: '',
   lyricist: '',
-  parts: [],
+  parts: []
 });
+let partsSequence: Ref<number[]> = ref([]);
 
 async function onSubmitSongSlug() {
   const song = await getSongDetails(songSlug.value);
@@ -25,6 +27,20 @@ async function onSubmitSongSlug() {
 async function onEditSongText() {
   songStructure.value.parts = formattedLyricsToSongParts(songText.value);
 }
+
+async function onClickDownloadPrez() {
+  let pres = new pptxgen();
+
+  partsSequence.value.forEach((i) => {
+    const part = songStructure.value.parts[i];
+    part.lyricsBySlide.forEach((text) => {
+      let slide = pres.addSlide();
+      slide.addText(text.join('\n'), { x: 0, y: 1, w: 10, fontSize: 48 });
+    });
+  });
+
+  pres.writeFile({ fileName: 'demo.pptx' });
+}
 </script>
 
 <template>
@@ -36,8 +52,8 @@ async function onEditSongText() {
     <p>{{ songStructure.title }}</p>
     <p>{{ songStructure.artist }} - {{ songStructure.lyricist }}</p>
 
-    <section v-for="part in songStructure.parts" :key="part.identifier">
-      <p>{{ part.identifier }}</p>
+    <section v-for="(part, partI) in songStructure.parts" :key="partI">
+      <p @click="partsSequence.push(partI)">{{ part.identifier }}</p>
 
       <section v-for="(slideLyrics, i) in part.lyricsBySlide" :key="i">
         <p>Slide {{ i }}</p>
@@ -46,7 +62,10 @@ async function onEditSongText() {
       </section>
     </section>
   </section>
+
+  <p>{{ partsSequence.map((i) => songStructure.parts[i].identifier).join(' > ') }}</p>
+
+  <button @click="onClickDownloadPrez">Download presentation</button>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -75,7 +75,10 @@ export async function getBibleChapterAsString(
   chapter: number
 ): Promise<string> {
   // FIXME BROKEN
-  const uri = new URL(NetlifyFunctionsBaseUri + '/' + bookShorthand + '/' + chapter, window.location.href);
+  const uri = new URL(
+    NetlifyFunctionsBaseUri + '/' + bookShorthand + '/' + chapter,
+    window.location.href
+  );
   const resp = await fetch(uri);
   return resp.text();
 }
