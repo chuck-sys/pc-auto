@@ -1,5 +1,12 @@
 const NetlifyFunctionsBaseUri = '/.netlify/functions';
 
+export interface CantohymnPerson {
+  id: number;
+  label: string;
+  slug: string;
+  prefix: string;
+}
+
 /**
  * A Cantohymn song, according to their API.
  */
@@ -21,6 +28,11 @@ export interface CantohymnSong {
   update_datetime: string;
   update_date: string;
   author: string;
+  owner: any;
+  songcomposer: CantohymnPerson[];
+  songlyricist: CantohymnPerson[];
+  songtranslate: CantohymnPerson[];
+  songsinger: CantohymnPerson[];
 }
 
 /**
@@ -60,7 +72,15 @@ export async function getSongDetails(slug: string): Promise<CantohymnSong> {
   if (resp.ok) {
     return json;
   } else {
-    throw new Error('Invalid JSON');
+    uri.searchParams.append('songHierarchyType', 'parent');
+    const resp = await fetch(uri);
+    const json = await resp.json();
+
+    if (resp.ok) {
+      return json;
+    } else {
+      throw new Error('Invalid JSON');
+    }
   }
 }
 

@@ -16,13 +16,14 @@ export const handler: Handler = async (event) => {
   }
 
   const slug = event.queryStringParameters.slug;
+  const songHierarchyType = event.queryStringParameters.songHierarchyType || 'child';
   const uri = new URL(CantohymnBaseApiUri + '/song-detail.php');
   uri.searchParams.append('slug', slug);
-  uri.searchParams.append('songHierarchyType', 'child');
+  uri.searchParams.append('songHierarchyType', songHierarchyType);
 
   const resp = await fetch(uri);
   const json = await resp.json();
-  if (json.success) {
+  if (json.success && json.data.currentSong !== null) {
     return {
       statusCode: 200,
       headers: {
