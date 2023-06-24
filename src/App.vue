@@ -18,6 +18,10 @@ function onCreateSong(song: Song) {
 function onUpdateSong(i: number, newSong: Song) {
   saveData.songs[i] = newSong;
 }
+
+function onDeleteSong(i: number) {
+  saveData.songs.splice(i, 1);
+}
 </script>
 
 <template>
@@ -27,6 +31,7 @@ function onUpdateSong(i: number, newSong: Song) {
         <TabbedDragDrop
           @create:song="onCreateSong"
           @update:song="onUpdateSong"
+          @delete:song="onDeleteSong"
           :songs="saveData.songs"
           :scriptures="saveData.scriptures"
         />

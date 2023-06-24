@@ -17,6 +17,7 @@ let emit = defineEmits<{
   (event: 'create:song', newSong: Song): void;
   (event: 'update:song', i: number, newSong: Song): void;
   (event: 'update:scriptures', newValue: Scripture[]): void;
+  (event: 'delete:song', i: number): void;
 }>();
 
 let tab = ref('liturgy');
@@ -27,6 +28,10 @@ function onCreateSong(newSong: Song) {
 
 function onUpdateSong(newSong: Song) {
   emit('update:song', editingIndex.value, newSong);
+}
+
+function onDeleteSong() {
+  emit('delete:song', editingIndex.value);
 }
 
 function onClickAddSong() {
@@ -74,6 +79,7 @@ function onClickSong(i: number) {
       :songs="songs"
       :i="editingIndex"
       @update:song="onUpdateSong"
+      @delete:song="onDeleteSong"
       v-model:dialog="showEditSongDialog" />
 </template>
 

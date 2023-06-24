@@ -45,6 +45,13 @@ function onClickCreateSong() {
     }),
   });
   emit('update:dialog', false);
+
+  song.title = '';
+  song.artist = '';
+  song.lyricist = '';
+  song.parts = [];
+  slug.value = '';
+  rawLyrics.value = '';
 }
 
 function onClickRemoveChords() {

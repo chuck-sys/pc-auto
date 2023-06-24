@@ -45,6 +45,11 @@ function onClickUpdateSong() {
   emit('update:dialog', false);
 }
 
+function onClickDeleteSong() {
+  emit('delete:song');
+  emit('update:dialog', false);
+}
+
 function onClickRemoveChords() {
   rawLyrics.value = rawLyrics.value.replace(/\[[\w/#]*\]/g, '');
 }
@@ -97,7 +102,7 @@ onBeforeUpdate(() => {
           Update
         </v-btn>
 
-        <v-btn @click="$emit('delete:song')" prepend-icon="$delete">
+        <v-btn @click="onClickDeleteSong" prepend-icon="$delete">
           Delete
         </v-btn>
 
