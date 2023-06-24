@@ -1,24 +1,42 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import SongCard from './SongCard.vue';
-import SongDialogue from './SongDialogue.vue';
+import { ref, reactive } from 'vue';
+import DraggableSongCard from './DraggableSongCard.vue';
+import CreateSongDialog from './CreateSongDialog.vue';
+import EditSongDialog from './EditSongDialog.vue';
 import type { Song, Scripture } from '../store';
 
-let showSongDialog = ref(false);
+let showCreateSongDialog = ref(false);
+let showEditSongDialog = ref(false);
+let editingIndex = ref(0);
 
-defineProps<{
+let props = defineProps<{
   songs: Song[];
   scriptures: Scripture[];
 }>();
 let emit = defineEmits<{
   (event: 'create:song', newSong: Song): void;
+  (event: 'update:song', i: number, newSong: Song): void;
   (event: 'update:scriptures', newValue: Scripture[]): void;
 }>();
 
 let tab = ref('liturgy');
 
-function onCreateSong(song: Song) {
-  emit('create:song', song);
+function onCreateSong(newSong: Song) {
+  emit('create:song', newSong);
+}
+
+function onUpdateSong(newSong: Song) {
+  emit('update:song', editingIndex.value, newSong);
+}
+
+function onClickAddSong() {
+  showCreateSongDialog.value = true;
+}
+
+function onClickSong(i: number) {
+  editingIndex.value = i;
+
+  showEditSongDialog.value = true;
 }
 </script>
 
@@ -33,9 +51,13 @@ function onCreateSong(song: Song) {
       <v-window v-model="tab">
         <v-window-item value="liturgy"> </v-window-item>
         <v-window-item value="songs">
-          <v-btn @click="showSongDialog = true" prepend-icon="$plus" variant="tonal"> Song </v-btn>
+          <v-btn @click="onClickAddSong" prepend-icon="$plus" variant="tonal"> Song </v-btn>
 
-          <SongCard v-for="(song, i) in songs" :key="i" :song="song" />
+          <DraggableSongCard
+            v-for="(song, i) in songs"
+            @click-title="onClickSong(i)"
+            :k="i"
+            :song="song" />
         </v-window-item>
         <v-window-item value="scripture">
           <v-btn prepend-icon="$plus" variant="tonal"> Scripture </v-btn>
@@ -44,11 +66,15 @@ function onCreateSong(song: Song) {
     </v-card-text>
   </v-card>
 
-  <SongDialogue
-    @create:song="onCreateSong"
-    v-model:dialog="showSongDialog"
-    :is-editing-existing-song="false"
-  />
+  <CreateSongDialog
+      @create:song="onCreateSong"
+      v-model:dialog="showCreateSongDialog" />
+
+  <EditSongDialog
+      :songs="songs"
+      :i="editingIndex"
+      @update:song="onUpdateSong"
+      v-model:dialog="showEditSongDialog" />
 </template>
 
 <style scoped></style>

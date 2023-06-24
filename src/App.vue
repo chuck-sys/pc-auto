@@ -14,6 +14,10 @@ let saveData: PresentationConfig = reactive({
 function onCreateSong(song: Song) {
   saveData.songs.push(song);
 }
+
+function onUpdateSong(i: number, newSong: Song) {
+  saveData.songs[i] = newSong;
+}
 </script>
 
 <template>
@@ -22,6 +26,7 @@ function onCreateSong(song: Song) {
       <v-col cols="12" sm="5">
         <TabbedDragDrop
           @create:song="onCreateSong"
+          @update:song="onUpdateSong"
           :songs="saveData.songs"
           :scriptures="saveData.scriptures"
         />
