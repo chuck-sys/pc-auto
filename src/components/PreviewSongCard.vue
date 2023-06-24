@@ -6,7 +6,7 @@ defineProps<{
 }>();
 
 defineEmits<{
-  (event: 'click-title'): void,
+  (event: 'click-title'): void;
 }>();
 </script>
 
@@ -19,7 +19,7 @@ defineEmits<{
     <v-card-subtitle> {{ song.artist }} - {{ song.lyricist }} </v-card-subtitle>
 
     <v-card-actions>
-      <v-chip v-for="part in song.parts">
+      <v-chip v-for="(part, i) in song.parts" :key="i">
         {{ part.identifier }} ({{ part.lyricsBySlide.length }})
       </v-chip>
     </v-card-actions>

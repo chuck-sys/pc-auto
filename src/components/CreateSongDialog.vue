@@ -21,7 +21,7 @@ let song: Song = reactive({
   title: '',
   artist: '',
   lyricist: '',
-  parts: [],
+  parts: []
 });
 
 async function onSubmitSlug() {
@@ -37,12 +37,12 @@ function onClickCreateSong() {
     title: song.title,
     artist: song.artist,
     lyricist: song.lyricist,
-    parts: song.parts.map(x => {
+    parts: song.parts.map((x) => {
       return {
         identifier: x.identifier,
-        lyricsBySlide: x.lyricsBySlide.map(slide => slide.map(line => line)),
+        lyricsBySlide: x.lyricsBySlide.map((slide) => slide.map((line) => line))
       };
-    }),
+    })
   });
   emit('update:dialog', false);
 
@@ -82,9 +82,7 @@ function onEditRawLyrics() {
       </v-row>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn @click="onClickCreateSong" prepend-icon="$plus">
-          Create
-        </v-btn>
+        <v-btn @click="onClickCreateSong" prepend-icon="$plus"> Create </v-btn>
 
         <v-btn @click="$emit('update:dialog', false)"> Cancel </v-btn>
       </v-card-actions>

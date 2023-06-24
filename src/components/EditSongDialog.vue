@@ -6,9 +6,9 @@ import { getSongDetails } from '../vendor-api';
 import type { Song } from '../store';
 
 let props = defineProps<{
-  songs: Song[],
-  i: number,
-  dialog: boolean,
+  songs: Song[];
+  i: number;
+  dialog: boolean;
 }>();
 
 let emit = defineEmits<{
@@ -24,7 +24,7 @@ let song: Song = reactive({
   title: '',
   artist: '',
   lyricist: '',
-  parts: [],
+  parts: []
 });
 
 async function onSubmitSlug() {
@@ -40,7 +40,7 @@ function onClickUpdateSong() {
     title: song.title,
     artist: song.artist,
     lyricist: song.lyricist,
-    parts: formattedLyricsToSongParts(rawLyrics.value),
+    parts: formattedLyricsToSongParts(rawLyrics.value)
   });
   emit('update:dialog', false);
 }
@@ -64,9 +64,9 @@ onBeforeUpdate(() => {
   }
 
   let untranslatedLyrics = '';
-  props.songs[props.i].parts.forEach(part => {
+  props.songs[props.i].parts.forEach((part) => {
     untranslatedLyrics += `${part.identifier}:\n`;
-    part.lyricsBySlide.forEach(slide => {
+    part.lyricsBySlide.forEach((slide) => {
       untranslatedLyrics += `${slide.join('\n')}\n\n`;
     });
   });
@@ -98,13 +98,9 @@ onBeforeUpdate(() => {
       </v-row>
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn @click="onClickUpdateSong" prepend-icon="$pencil">
-          Update
-        </v-btn>
+        <v-btn @click="onClickUpdateSong" prepend-icon="$pencil"> Update </v-btn>
 
-        <v-btn @click="onClickDeleteSong" prepend-icon="$delete">
-          Delete
-        </v-btn>
+        <v-btn @click="onClickDeleteSong" prepend-icon="$delete"> Delete </v-btn>
 
         <v-btn @click="$emit('update:dialog', false)"> Cancel </v-btn>
       </v-card-actions>

@@ -8,16 +8,16 @@ let props = defineProps<{
 }>();
 
 defineEmits<{
-  (event: 'click-title'): void,
+  (event: 'click-title'): void;
 }>();
 
 function onCloneSong(s: SongPart) {
-  const songPartIndex = props.song.parts.map(p => p.identifier).indexOf(s.identifier);
+  const songPartIndex = props.song.parts.map((p) => p.identifier).indexOf(s.identifier);
 
   return {
     type: 'song',
     songId: props.k,
-    songPart: songPartIndex,
+    songPart: songPartIndex
   };
 }
 </script>
@@ -32,14 +32,13 @@ function onCloneSong(s: SongPart) {
 
     <v-card-actions>
       <draggable
-          item-key="identifier"
-          :clone="onCloneSong"
-          :list="song.parts"
-          :group="{ name: 'part', pull: 'clone', put: false }">
+        item-key="identifier"
+        :clone="onCloneSong"
+        :list="song.parts"
+        :group="{ name: 'part', pull: 'clone', put: false }"
+      >
         <template #item="{ element }">
-          <v-chip draggable>
-            {{ element.identifier }} ({{ element.lyricsBySlide.length }})
-          </v-chip>
+          <v-chip draggable> {{ element.identifier }} ({{ element.lyricsBySlide.length }}) </v-chip>
         </template>
       </draggable>
     </v-card-actions>

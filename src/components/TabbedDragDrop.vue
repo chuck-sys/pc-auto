@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref } from 'vue';
 import DraggableSongCard from './DraggableSongCard.vue';
 import CreateSongDialog from './CreateSongDialog.vue';
 import EditSongDialog from './EditSongDialog.vue';
@@ -9,7 +9,7 @@ let showCreateSongDialog = ref(false);
 let showEditSongDialog = ref(false);
 let editingIndex = ref(0);
 
-let props = defineProps<{
+defineProps<{
   songs: Song[];
   scriptures: Scripture[];
 }>();
@@ -62,7 +62,9 @@ function onClickSong(i: number) {
             v-for="(song, i) in songs"
             @click-title="onClickSong(i)"
             :k="i"
-            :song="song" />
+            :key="i"
+            :song="song"
+          />
         </v-window-item>
         <v-window-item value="scripture">
           <v-btn prepend-icon="$plus" variant="tonal"> Scripture </v-btn>
@@ -71,16 +73,15 @@ function onClickSong(i: number) {
     </v-card-text>
   </v-card>
 
-  <CreateSongDialog
-      @create:song="onCreateSong"
-      v-model:dialog="showCreateSongDialog" />
+  <CreateSongDialog @create:song="onCreateSong" v-model:dialog="showCreateSongDialog" />
 
   <EditSongDialog
-      :songs="songs"
-      :i="editingIndex"
-      @update:song="onUpdateSong"
-      @delete:song="onDeleteSong"
-      v-model:dialog="showEditSongDialog" />
+    :songs="songs"
+    :i="editingIndex"
+    @update:song="onUpdateSong"
+    @delete:song="onDeleteSong"
+    v-model:dialog="showEditSongDialog"
+  />
 </template>
 
 <style scoped></style>
