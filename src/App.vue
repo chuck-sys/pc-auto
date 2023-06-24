@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, provide } from 'vue';
 import TabbedDragDrop from './components/TabbedDragDrop.vue';
+import DraggableTimeline from './components/DraggableTimeline.vue';
 import type { Song, PresentationConfig } from './store';
 
 let saveData: PresentationConfig = reactive({
@@ -10,6 +11,9 @@ let saveData: PresentationConfig = reactive({
   scriptures: [],
   songs: []
 });
+
+provide('songs', saveData.songs);
+provide('scriptures', saveData.scriptures);
 
 function onCreateSong(song: Song) {
   saveData.songs.push(song);
@@ -37,7 +41,9 @@ function onDeleteSong(i: number) {
         />
       </v-col>
 
-      <v-col cols="12" sm="2"> </v-col>
+      <v-col cols="12" sm="2">
+        <DraggableTimeline v-model:parts="saveData.parts" />
+      </v-col>
 
       <v-col cols="12" sm="5"> </v-col>
     </v-row>

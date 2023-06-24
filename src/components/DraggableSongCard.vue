@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import draggable from 'vuedraggable';
 import type { Song, SongPart } from '../store';
+import type { Part } from '../parts';
 
 let props = defineProps<{
   song: Song;
@@ -11,13 +12,14 @@ defineEmits<{
   (event: 'click-title'): void;
 }>();
 
-function onCloneSong(s: SongPart) {
+function onCloneSong(s: SongPart): Part {
   const songPartIndex = props.song.parts.map((p) => p.identifier).indexOf(s.identifier);
 
   return {
-    type: 'song',
+    type: 1,
     songId: props.k,
-    songPart: songPartIndex
+    songPart: songPartIndex,
+    displayMetadata: false
   };
 }
 </script>

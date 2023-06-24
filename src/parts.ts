@@ -1,11 +1,11 @@
 /// TODO add the remaining different types of parts
 export enum PartType {
-  Welcome,
-  Song,
-  CallToWorship,
-  VerseByVerseResponse,
-  OldTestamentReading,
-  NewTestamentReading
+  Welcome = 0,
+  Song = 1,
+  CallToWorship = 2,
+  VerseByVerseResponse = 3,
+  OldTestamentReading = 4,
+  NewTestamentReading = 5
 }
 
 interface Welcome {
