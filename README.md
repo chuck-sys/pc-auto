@@ -1,16 +1,24 @@
 # pc-auto
 
-This template should help get you started developing with Vue 3 in Vite.
+Web app that makes creating PowerPoint presentations (`.pptx`) files a breeze! Currently under heavy
+development.
 
 ## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+[VSCode](https://code.visualstudio.com/)
++ [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript
+Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
 ## Type Support for `.vue` Imports in TS
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with
+`vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin
+(Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the
+TypeScript language service aware of `.vue` types.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take
+Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more
+performant. You can enable it by the following steps:
 
 1. Disable the built-in TypeScript Extension
     1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
@@ -27,20 +35,20 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Hot-reload for development
+
+We use Netlify Functions here. Fortunately for us, `netlify dev` does Functions as well.
 
 ```sh
-npm run dev
+netlify dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Github workflow checks
 
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
+You should run these before pushing.
 
 ```sh
 npm run lint
+npm run format
+npm run test
 ```
