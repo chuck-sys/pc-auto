@@ -162,7 +162,6 @@ the function that allows the user to download the presentation.
                     ]
                 }
             ],
-            displayMetadata: false,
         }
     ],
     scriptures: [
@@ -184,7 +183,6 @@ the function that allows the user to download the presentation.
             type: "song",
             songId: 0,                          // References the first song on the list
             songPart: 0,                        // References the first part of the song
-            displayMetadata: true,              // Option that you can configure (overrides default)
         },
         {
             type: "song",

@@ -16,10 +16,9 @@ function onCloneSong(s: SongPart): Part {
   const songPartIndex = props.song.parts.map((p) => p.identifier).indexOf(s.identifier);
 
   return {
-    type: 1,
+    type: 'song',
     songId: props.k,
-    songPart: songPartIndex,
-    displayMetadata: false
+    songPart: songPartIndex
   };
 }
 </script>
