@@ -38,3 +38,15 @@
 17. Repeat 14-16 until 舊約, 新約, and 福音經文 are dragged into main area and properly configured
 18. Press the "Download Slides" button
 19. See that the slides are being downloaded
+
+# Presentation configuration
+
+- I can add a presentation date and have it reflected in the presentation
+- I can add certain texts that can show up as custom slides in the presentation
+- I can create custom templates that, when clicked, will make a presentation that has parts pre-configured
+  and added to the workspace
+- I can create globally-scoped configuration, configuration that is scoped to a single song, and
+  configuration that is scoped to a single part, all of which can override the next in line. Thus,
+  a presentation-wide configuration that forces the part identifier of each song to show in the corner of
+  the slide can be overwritten in a specific song's configuration, which can be overwritten in that
+  specific song's part.
