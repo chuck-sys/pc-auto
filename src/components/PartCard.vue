@@ -13,7 +13,10 @@ const songs: Song[] = inject('songs', []);
 </script>
 
 <template>
-  <v-card v-if="part.type === 1">
+  <v-card v-if="part.type === 'welcome'">
+    <v-card-title>Welcome</v-card-title>
+  </v-card>
+  <v-card v-else-if="part.type === 'song'">
     <v-card-title>{{ songs[part.songId].title }}</v-card-title>
     <v-card-actions>{{ songs[part.songId].parts[part.songPart].identifier }}</v-card-actions>
   </v-card>

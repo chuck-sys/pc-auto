@@ -1,48 +1,46 @@
 /// TODO add the remaining different types of parts
-export enum PartType {
-  Welcome = 0,
-  Song = 1,
-  CallToWorship = 2,
-  VerseByVerseResponse = 3,
-  OldTestamentReading = 4,
-  NewTestamentReading = 5
-}
 
 interface Welcome {
-  type: PartType.Welcome;
+  type: 'welcome';
 }
 
 interface Song {
-  type: PartType.Song;
+  type: 'song';
   songId: number;
   songPart: number;
   displayMetadata: boolean;
 }
 
 interface CallToWorship {
-  type: PartType.CallToWorship;
+  type: 'call-to-worship';
 }
 
-interface VerseByVerseResponse {
-  type: PartType.VerseByVerseResponse;
+interface PsalmResponse {
+  type: 'psalm-response';
   scriptureId: number;
   isLastVerseSaidTogether: boolean;
 }
 
 interface OldTestamentReading {
-  type: PartType.OldTestamentReading;
+  type: 'ot-reading';
   scriptureId: number;
 }
 
 interface NewTestamentReading {
-  type: PartType.NewTestamentReading;
+  type: 'nt-reading';
   scriptureId: number;
+}
+
+interface PartGroup {
+  type: 'group';
+  parts: Part[];
 }
 
 export type Part =
   | Welcome
   | CallToWorship
   | Song
-  | VerseByVerseResponse
+  | PsalmResponse
   | OldTestamentReading
-  | NewTestamentReading;
+  | NewTestamentReading
+  | PartGroup;
