@@ -10,7 +10,7 @@ defineEmits<{
 
 <template>
   <v-container>
-    <v-card v-for="template in installedTemplates">
+    <v-card v-for="(template, i) in installedTemplates" :key="i">
       <v-card-title class="template-name">{{ template.name }}</v-card-title>
       <v-card-subtitle>{{ template.description }}</v-card-subtitle>
       <v-card-actions>
@@ -21,5 +21,4 @@ defineEmits<{
   </v-container>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -9,25 +9,24 @@ defineProps<{
   parts: Part[];
 }>();
 
-const emit = defineEmits<{
+defineEmits<{
   (event: 'update:parts', newParts: Part[]): void;
+  (event: 'preview-template', template: Template): void;
 }>();
-
-function onUseTemplate(template: Template): void {
-  emit('update:parts', template.parts);
-}
 </script>
 
 <template>
-  <draggable item-key="type" :list="parts" group="part">
+  <draggable item-key="type" :modelValue="parts" group="part">
     <template #item="{ element }">
       <PartCard :part="element" />
     </template>
   </draggable>
 
   <QuickstartTemplates
-      @use-template="onUseTemplate"
-      v-show="parts.length === 0" />
+    @preview-template="$emit('preview-template', $event)"
+    @use-template="$emit('update:parts', $event.parts)"
+    v-show="parts.length === 0"
+  />
 </template>
 
 <style scoped></style>

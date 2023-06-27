@@ -3,6 +3,7 @@ import { reactive, provide } from 'vue';
 import TabbedDragDrop from './components/TabbedDragDrop.vue';
 import DraggableTimeline from './components/DraggableTimeline.vue';
 import type { Song, PresentationConfig } from './store';
+import type { Template } from './templates';
 
 let saveData: PresentationConfig = reactive({
   presentationDate: new Date(),
@@ -26,6 +27,10 @@ function onUpdateSong(i: number, newSong: Song) {
 function onDeleteSong(i: number) {
   saveData.songs.splice(i, 1);
 }
+
+function onPreviewTemplate(template: Template) {
+  return template;
+}
 </script>
 
 <template>
@@ -42,8 +47,7 @@ function onDeleteSong(i: number) {
       </v-col>
 
       <v-col cols="12" sm="2">
-        <DraggableTimeline
-            v-model:parts="saveData.parts" />
+        <DraggableTimeline @preview-template="onPreviewTemplate" v-model:parts="saveData.parts" />
       </v-col>
 
       <v-col cols="12" sm="5"> </v-col>

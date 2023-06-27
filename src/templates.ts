@@ -33,6 +33,4 @@ const installedTemplates: Template[] = [
   }
 ];
 
-export {
-  installedTemplates
-};
+export { installedTemplates };
