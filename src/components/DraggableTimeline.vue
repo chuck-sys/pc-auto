@@ -1,15 +1,21 @@
 <script setup lang="ts">
 import draggable from 'vuedraggable';
 import PartCard from './PartCard.vue';
+import QuickstartTemplates from './QuickstartTemplates.vue';
 import type { Part } from '../parts';
+import type { Template } from '../templates';
 
 defineProps<{
   parts: Part[];
 }>();
 
-defineEmits<{
+const emit = defineEmits<{
   (event: 'update:parts', newParts: Part[]): void;
 }>();
+
+function onUseTemplate(template: Template): void {
+  emit('update:parts', template.parts);
+}
 </script>
 
 <template>
@@ -19,7 +25,9 @@ defineEmits<{
     </template>
   </draggable>
 
-  <div v-show="parts.length === 0">Drag something here!</div>
+  <QuickstartTemplates
+      @use-template="onUseTemplate"
+      v-show="parts.length === 0" />
 </template>
 
 <style scoped></style>

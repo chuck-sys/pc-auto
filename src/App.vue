@@ -42,7 +42,8 @@ function onDeleteSong(i: number) {
       </v-col>
 
       <v-col cols="12" sm="2">
-        <DraggableTimeline v-model:parts="saveData.parts" />
+        <DraggableTimeline
+            v-model:parts="saveData.parts" />
       </v-col>
 
       <v-col cols="12" sm="5"> </v-col>

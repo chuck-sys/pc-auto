@@ -33,6 +33,7 @@ interface NewTestamentReading {
 
 interface PartGroup {
   type: 'group';
+  name?: string;
   parts: Part[];
 }
 
