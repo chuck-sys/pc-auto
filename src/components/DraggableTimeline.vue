@@ -16,7 +16,7 @@ defineEmits<{
 </script>
 
 <template>
-  <draggable item-key="type" :modelValue="parts" group="part">
+  <draggable item-key="type" :list="parts" group="part">
     <template #item="{ element }">
       <PartCard :part="element" />
     </template>
