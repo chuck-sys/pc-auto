@@ -11,7 +11,7 @@ defineProps<{
 
 defineEmits<{
   (event: 'update:parts', newParts: Part[]): void;
-  (event: 'preview-template', template: Template): void;
+  (event: 'click-template-options', template: Template): void;
 }>();
 </script>
 
@@ -23,7 +23,7 @@ defineEmits<{
   </draggable>
 
   <QuickstartTemplates
-    @preview-template="$emit('preview-template', $event)"
+    @click-template-options="$emit('click-template-options', $event)"
     @use-template="$emit('update:parts', $event.parts)"
     v-show="parts.length === 0"
   />

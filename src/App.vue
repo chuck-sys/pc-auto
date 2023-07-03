@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { reactive, provide } from 'vue';
+import { ref, reactive, provide } from 'vue';
 import TabbedDragDrop from './components/TabbedDragDrop.vue';
 import DraggableTimeline from './components/DraggableTimeline.vue';
 import GlobalOptions from './components/GlobalOptions.vue';
+import type { Ref } from 'vue';
 import type { Song, PresentationConfig } from './store';
 import type { Template } from './templates';
 
@@ -13,6 +14,9 @@ let saveData: PresentationConfig = reactive({
   scriptures: [],
   songs: []
 });
+
+let selectedTemplate: Ref<{} | Template> = ref({});
+let optionsModel: Ref<'global' | 'template'> = ref('global');
 
 provide('songs', saveData.songs);
 provide('scriptures', saveData.scriptures);
@@ -51,8 +55,10 @@ function onPreviewTemplate(template: Template) {
   return template;
 }
 
-function onClickDownload() {
+function onClickDownload() {}
 
+function onClickTemplateOptions(t: Template) {
+  selectedTemplate.value = t;
 }
 </script>
 
@@ -68,12 +74,15 @@ function onClickDownload() {
       </v-col>
 
       <v-col cols="12" sm="2">
-        <DraggableTimeline @preview-template="onPreviewTemplate" v-model:parts="saveData.parts" />
+        <DraggableTimeline
+          @preview-template="onPreviewTemplate"
+          @click-template-options="onClickTemplateOptions"
+          v-model:parts="saveData.parts"
+        />
       </v-col>
 
       <v-col cols="12" sm="5">
-        <GlobalOptions
-            @click-download="onClickDownload" />
+        <GlobalOptions v-if="optionsModel === 'global'" @click-download="onClickDownload" />
       </v-col>
     </v-row>
   </v-container>
