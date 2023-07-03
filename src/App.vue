@@ -2,6 +2,7 @@
 import { reactive, provide } from 'vue';
 import TabbedDragDrop from './components/TabbedDragDrop.vue';
 import DraggableTimeline from './components/DraggableTimeline.vue';
+import GlobalOptions from './components/GlobalOptions.vue';
 import type { Song, PresentationConfig } from './store';
 import type { Template } from './templates';
 
@@ -31,6 +32,10 @@ function onDeleteSong(i: number) {
 function onPreviewTemplate(template: Template) {
   return template;
 }
+
+function onClickDownload() {
+
+}
 </script>
 
 <template>
@@ -50,7 +55,10 @@ function onPreviewTemplate(template: Template) {
         <DraggableTimeline @preview-template="onPreviewTemplate" v-model:parts="saveData.parts" />
       </v-col>
 
-      <v-col cols="12" sm="5"> </v-col>
+      <v-col cols="12" sm="5">
+        <GlobalOptions
+            @click-download="onClickDownload" />
+      </v-col>
     </v-row>
   </v-container>
 </template>
