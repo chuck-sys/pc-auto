@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import DraggableSongCard from './DraggableSongCard.vue';
 import CreateSongDialog from './CreateSongDialog.vue';
 import EditSongDialog from './EditSongDialog.vue';
@@ -9,10 +9,8 @@ let showCreateSongDialog = ref(false);
 let showEditSongDialog = ref(false);
 let editingIndex = ref(0);
 
-defineProps<{
-  songs: Song[];
-  scriptures: Scripture[];
-}>();
+const songs: Song[] = inject('songs', []);
+
 let emit = defineEmits<{
   (event: 'create:song', newSong: Song): void;
   (event: 'update:song', i: number, newSong: Song): void;

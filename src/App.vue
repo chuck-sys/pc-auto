@@ -26,7 +26,25 @@ function onUpdateSong(i: number, newSong: Song) {
 }
 
 function onDeleteSong(i: number) {
+  // When deleting a song, it is important to remember that there could be other songs with a higher
+  // index, and we will have to re-index all the parts after a certain index. This is as simple as going
+  // through all parts and decreasing the index by 1 if the index is greater than i
   saveData.songs.splice(i, 1);
+
+  // Iterate backwards so we can delete parts safely
+  for (let i = saveData.parts.length - 1; i >= 0; i--) {
+    const part = saveData.parts[i];
+    if (part.type === 'song') {
+      if (part.songId === i) {
+        saveData.parts.splice(i, 1);
+      } else if (part.songId > i) {
+        part.songId--;
+      }
+    }
+  }
+
+  // Another solution to this would be to simply not allow any song deletions at all, and instead have the
+  // user delete all save data (parts, songs, scriptures, etc.).
 }
 
 function onPreviewTemplate(template: Template) {
@@ -46,8 +64,6 @@ function onClickDownload() {
           @create:song="onCreateSong"
           @update:song="onUpdateSong"
           @delete:song="onDeleteSong"
-          :songs="saveData.songs"
-          :scriptures="saveData.scriptures"
         />
       </v-col>
 
