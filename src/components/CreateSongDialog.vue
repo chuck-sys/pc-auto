@@ -64,20 +64,20 @@ function onEditRawLyrics() {
 </script>
 
 <template>
-  <v-dialog width="auto" @update:modelValue="$emit('update:dialog', $event)" :modelValue="dialog">
+  <v-dialog width="80rem" @update:modelValue="$emit('update:dialog', $event)" :modelValue="dialog">
     <v-card>
       <v-card-title>New Song</v-card-title>
       <v-row>
         <v-col cols="12" sm="6">
-          <input type="text" v-model="slug" placeholder="Song Name" @keyup.enter="onSubmitSlug" />
+          <v-text-field label="Search for songs..." single-line prepend-inner-icon="$magnify" v-model="slug" @keyup.enter="onSubmitSlug" placeholder="迷羊" />
 
           <PreviewSongCard :song="song" />
-
-          <v-btn @click="onClickRemoveChords"> Remove chords </v-btn>
         </v-col>
 
         <v-col cols="12" sm="6">
-          <textarea v-model="rawLyrics" @change="onEditRawLyrics"></textarea>
+          <v-textarea v-model="rawLyrics" height="30rem" label="Lyrics" @change="onEditRawLyrics"></v-textarea>
+
+          <v-btn @click="onClickRemoveChords"> Remove chords </v-btn>
         </v-col>
       </v-row>
       <v-divider></v-divider>

@@ -9,7 +9,7 @@ import { createVuetify } from 'vuetify';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg';
-import { mdiPlus, mdiDelete, mdiPencil } from '@mdi/js';
+import { mdiMagnify, mdiPlus, mdiDelete, mdiPencil } from '@mdi/js';
 
 const vuetify = createVuetify({
   components,
@@ -23,7 +23,8 @@ const vuetify = createVuetify({
       ...aliases,
       plus: mdiPlus,
       delete: mdiDelete,
-      pencil: mdiPencil
+      pencil: mdiPencil,
+      magnify: mdiMagnify
     },
     sets: {
       mdi
