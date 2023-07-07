@@ -73,7 +73,7 @@ function onClickTemplateOptions(t: Template) {
         />
       </v-col>
 
-      <v-col cols="12" sm="2">
+      <v-col cols="12" sm="4">
         <DraggableTimeline
           @preview-template="onPreviewTemplate"
           @click-template-options="onClickTemplateOptions"
@@ -81,7 +81,7 @@ function onClickTemplateOptions(t: Template) {
         />
       </v-col>
 
-      <v-col cols="12" sm="5">
+      <v-col cols="12" sm="3">
         <GlobalOptions v-if="optionsModel === 'global'" @click-download="onClickDownload" />
       </v-col>
     </v-row>
