@@ -69,13 +69,25 @@ function onEditRawLyrics() {
       <v-card-title>New Song</v-card-title>
       <v-row>
         <v-col cols="12" sm="6">
-          <v-text-field label="Search for songs..." single-line prepend-inner-icon="$magnify" v-model="slug" @keyup.enter="onSubmitSlug" placeholder="迷羊" />
+          <v-text-field
+            label="Search for songs..."
+            single-line
+            prepend-inner-icon="$magnify"
+            v-model="slug"
+            @keyup.enter="onSubmitSlug"
+            placeholder="迷羊"
+          />
 
           <PreviewSongCard :song="song" />
         </v-col>
 
         <v-col cols="12" sm="6">
-          <v-textarea v-model="rawLyrics" height="30rem" label="Lyrics" @change="onEditRawLyrics"></v-textarea>
+          <v-textarea
+            v-model="rawLyrics"
+            height="30rem"
+            label="Lyrics"
+            @change="onEditRawLyrics"
+          ></v-textarea>
 
           <v-btn @click="onClickRemoveChords"> Remove chords </v-btn>
         </v-col>
