@@ -18,6 +18,7 @@ let emit = defineEmits<{
   (event: 'cancel'): void;
 }>();
 
+let searchForSongs = ref(false);
 let slug = ref('');
 let rawLyrics = ref('');
 let song: Song = reactive({
@@ -28,11 +29,15 @@ let song: Song = reactive({
 });
 
 async function onSubmitSlug() {
+  searchForSongs.value = true;
+
   const songDetails = await getSongDetails(slug.value);
   song.title = songDetails.title;
   song.artist = songDetails.songcomposer.map((person) => person.label).join(', ');
   song.lyricist = songDetails.songlyricist.map((person) => person.label).join(', ');
   rawLyrics.value = songDetails.lyrics;
+
+  searchForSongs.value = false;
 }
 
 function onClickUpdateSong() {
@@ -70,7 +75,7 @@ onBeforeUpdate(() => {
       untranslatedLyrics += `${slide.join('\n')}\n\n`;
     });
   });
-  rawLyrics.value = untranslatedLyrics;
+  rawLyrics.value = untranslatedLyrics.trimEnd();
 
   song.title = props.songs[props.i].title;
   song.artist = props.songs[props.i].artist;
@@ -85,7 +90,17 @@ onBeforeUpdate(() => {
       <v-card-title>Edit Song</v-card-title>
       <v-row>
         <v-col cols="12" sm="6">
-          <input type="text" v-model="slug" placeholder="Song Name" @keyup.enter="onSubmitSlug" />
+          <v-text-field
+            type="text"
+            v-model="slug"
+            placeholder="Song Name"
+            @keyup.enter="onSubmitSlug"
+          >
+            <template v-slot:loader>
+              <v-progress-linear :active="searchForSongs" indeterminate color="green">
+              </v-progress-linear>
+            </template>
+          </v-text-field>
 
           <PreviewSongCard :song="song" />
 
@@ -93,7 +108,7 @@ onBeforeUpdate(() => {
         </v-col>
 
         <v-col cols="12" sm="6">
-          <textarea v-model="rawLyrics" @change="onEditRawLyrics"></textarea>
+          <v-textarea v-model="rawLyrics" @change="onEditRawLyrics" label="Lyrics"></v-textarea>
         </v-col>
       </v-row>
       <v-divider></v-divider>

@@ -15,6 +15,7 @@ let emit = defineEmits<{
   (event: 'cancel'): void;
 }>();
 
+let searchForSongs = ref(false);
 let slug = ref('');
 let rawLyrics = ref('');
 let song: Song = reactive({
@@ -25,11 +26,15 @@ let song: Song = reactive({
 });
 
 async function onSubmitSlug() {
+  searchForSongs.value = true;
+
   const songDetails = await getSongDetails(slug.value);
   song.title = songDetails.title;
   song.artist = songDetails.songcomposer.map((person) => person.label).join(', ');
   song.lyricist = songDetails.songlyricist.map((person) => person.label).join(', ');
   rawLyrics.value = songDetails.lyrics;
+
+  searchForSongs.value = false;
 }
 
 function onClickCreateSong() {
@@ -76,7 +81,12 @@ function onEditRawLyrics() {
             v-model="slug"
             @keyup.enter="onSubmitSlug"
             placeholder="迷羊"
-          />
+          >
+            <template v-slot:loader>
+              <v-progress-linear :active="searchForSongs" indeterminate color="green">
+              </v-progress-linear>
+            </template>
+          </v-text-field>
 
           <PreviewSongCard :song="song" />
         </v-col>
