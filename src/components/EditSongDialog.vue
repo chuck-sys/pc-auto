@@ -55,8 +55,38 @@ function onClickDeleteSong() {
   emit('update:dialog', false);
 }
 
-function onClickRemoveChords() {
-  rawLyrics.value = rawLyrics.value.replace(/\[[\w/#]*\]/g, '');
+function removeChords(text: string): string {
+  return text.replace(/\[[\w/#]*\]/g, '');
+}
+
+function addColonsAndTrim(text: string): string {
+  const lines = text.split('\n');
+  let modified: string[] = [];
+  let isFirstLineOfParagraph = true;
+
+  for (let i = 0; i < lines.length; i++) {
+    const trimmedLine = lines[i].trim();
+    if (isFirstLineOfParagraph && trimmedLine.length > 0) {
+      modified.push(trimmedLine + ':');
+      isFirstLineOfParagraph = false;
+    } else if (trimmedLine.length === 0) {
+      modified.push(trimmedLine);
+      isFirstLineOfParagraph = true;
+    } else {
+      modified.push(trimmedLine);
+    }
+  }
+
+  return modified.join('\n');
+}
+
+function onClickCleanText() {
+  const unchorded = removeChords(rawLyrics.value);
+  const cleaned = addColonsAndTrim(unchorded);
+
+  rawLyrics.value = cleaned;
+
+  onEditRawLyrics();
 }
 
 function onEditRawLyrics() {
@@ -103,12 +133,12 @@ onBeforeUpdate(() => {
           </v-text-field>
 
           <PreviewSongCard :song="song" />
-
-          <v-btn @click="onClickRemoveChords"> Remove chords </v-btn>
         </v-col>
 
         <v-col cols="12" sm="6">
           <v-textarea v-model="rawLyrics" @change="onEditRawLyrics" label="Lyrics"></v-textarea>
+
+          <v-btn @click="onClickCleanText"> Clean text </v-btn>
         </v-col>
       </v-row>
       <v-divider></v-divider>

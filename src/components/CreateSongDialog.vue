@@ -59,12 +59,42 @@ function onClickCreateSong() {
   rawLyrics.value = '';
 }
 
-function onClickRemoveChords() {
-  rawLyrics.value = rawLyrics.value.replace(/\[[\w/#]*\]/g, '');
-}
-
 function onEditRawLyrics() {
   song.parts = formattedLyricsToSongParts(rawLyrics.value);
+}
+
+function removeChords(text: string): string {
+  return text.replace(/\[[\w/#]*\]/g, '');
+}
+
+function addColonsAndTrim(text: string): string {
+  const lines = text.split('\n');
+  let modified: string[] = [];
+  let isFirstLineOfParagraph = true;
+
+  for (let i = 0; i < lines.length; i++) {
+    const trimmedLine = lines[i].trim();
+    if (isFirstLineOfParagraph && trimmedLine.length > 0) {
+      modified.push(trimmedLine + ':');
+      isFirstLineOfParagraph = false;
+    } else if (trimmedLine.length === 0) {
+      modified.push(trimmedLine);
+      isFirstLineOfParagraph = true;
+    } else {
+      modified.push(trimmedLine);
+    }
+  }
+
+  return modified.join('\n');
+}
+
+function onClickCleanText() {
+  const unchorded = removeChords(rawLyrics.value);
+  const cleaned = addColonsAndTrim(unchorded);
+
+  rawLyrics.value = cleaned;
+
+  onEditRawLyrics();
 }
 </script>
 
@@ -99,7 +129,7 @@ function onEditRawLyrics() {
             @change="onEditRawLyrics"
           ></v-textarea>
 
-          <v-btn @click="onClickRemoveChords"> Remove chords </v-btn>
+          <v-btn @click="onClickCleanText"> Clean text </v-btn>
         </v-col>
       </v-row>
       <v-divider></v-divider>

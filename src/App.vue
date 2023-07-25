@@ -3,6 +3,7 @@ import { ref, reactive, provide } from 'vue';
 import TabbedDragDrop from './components/TabbedDragDrop.vue';
 import DraggableTimeline from './components/DraggableTimeline.vue';
 import GlobalOptions from './components/GlobalOptions.vue';
+import { createPresentation } from './presentation';
 import type { Ref } from 'vue';
 import type { Song, PresentationConfig } from './store';
 import type { Template } from './templates';
@@ -55,7 +56,10 @@ function onPreviewTemplate(template: Template) {
   return template;
 }
 
-function onClickDownload() {}
+function onClickDownload() {
+  const presentation = createPresentation(saveData);
+  presentation.writeFile({ fileName: 'presentation' });
+}
 
 function onClickTemplateOptions(t: Template) {
   selectedTemplate.value = t;

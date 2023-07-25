@@ -2,49 +2,37 @@
 /// Using strings as types isn't optimal, but we work with what we are given because Typescript enums are
 /// essentially incompatible with Vue stuffs
 
-interface Welcome {
+export interface Welcome {
   type: 'welcome';
 }
 
-interface Song {
+export interface Song {
   type: 'song';
   songId: number;
   songPart: number;
 }
 
-interface CallToWorship {
+export interface CallToWorship {
   type: 'call-to-worship';
 }
 
-interface PsalmResponse {
+export interface PsalmResponse {
   type: 'psalm-response';
   scriptureId: number;
 }
 
-interface OldTestamentReading {
-  type: 'ot-reading';
+export interface Reading {
+  type: 'reading';
   scriptureId: number;
 }
 
-interface NewTestamentReading {
-  type: 'nt-reading';
-  scriptureId: number;
-}
-
-interface PartGroup {
+export interface PartGroup {
   type: 'group';
   name?: string;
   parts: Part[];
 }
 
-export type Part =
-  | Welcome
-  | CallToWorship
-  | Song
-  | PsalmResponse
-  | OldTestamentReading
-  | NewTestamentReading
-  | PartGroup;
+export type Part = Welcome | CallToWorship | Song | PsalmResponse | Reading | PartGroup;
 
 /**
  * Flatten all PartGroups within a list of Parts, recursively.
