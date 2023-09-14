@@ -2,7 +2,7 @@ import { Handler } from '@netlify/functions';
 
 const CantohymnBaseApiUri: string = 'https://cantonhymn.net/api';
 
-export const handler: Handler = async (event) => {
+export const handler: Handler = async event => {
   if (!event.queryStringParameters.slug) {
     return {
       statusCode: 400,

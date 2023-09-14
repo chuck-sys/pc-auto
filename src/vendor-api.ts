@@ -41,20 +41,15 @@ export interface CantohymnSong {
  * May require some tweaking if it starts to not work.
  */
 export async function searchSongsWithFilter(words: string): Promise<CantohymnSong[]> {
-  const uri = new URL(NetlifyFunctionsBaseUri + '/search-songs-with-filter', window.location.href);
-  uri.searchParams.append('generalType', 'all');
-  uri.searchParams.append('recommendType', 'latest');
-  uri.searchParams.append('filter1_target', 'any');
-  uri.searchParams.append('filter1_type', 'contain_all_words');
-  uri.searchParams.append('filter1_val', words);
-  uri.searchParams.append('as_page', '1');
+  const uri = new URL(NetlifyFunctionsBaseUri + '/search-songs', window.location.href);
+  uri.searchParams.append('q', words);
 
   const resp = await fetch(uri);
   const json = await resp.json();
   if (resp.ok) {
-    return json.data.songs;
+    return json;
   } else {
-    throw new Error('Invalid JSON');
+    throw new Error(json);
   }
 }
 
@@ -79,7 +74,7 @@ export async function getSongDetails(slug: string): Promise<CantohymnSong> {
     if (resp.ok) {
       return json;
     } else {
-      throw new Error('Invalid JSON');
+      throw new Error(json);
     }
   }
 }
