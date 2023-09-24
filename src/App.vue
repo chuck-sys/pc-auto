@@ -7,6 +7,7 @@ import { createPresentation } from './presentation';
 import type { Ref } from 'vue';
 import type { Song, PresentationConfig } from './store';
 import type { Template } from './templates';
+import type { Options } from './options';
 
 let saveData: PresentationConfig = reactive({
   presentationDate: new Date(),
@@ -17,7 +18,7 @@ let saveData: PresentationConfig = reactive({
 });
 
 let selectedTemplate: Ref<{} | Template> = ref({});
-let optionsModel: Ref<'global' | 'template'> = ref('global');
+let optionsModel: Ref<Options> = ref('global');
 
 provide('songs', saveData.songs);
 provide('scriptures', saveData.scriptures);
@@ -64,6 +65,10 @@ function onClickDownload() {
 function onClickTemplateOptions(t: Template) {
   selectedTemplate.value = t;
 }
+
+function onChangeTab(tab: Options) {
+  optionsModel.value = tab;
+}
 </script>
 
 <template>
@@ -74,6 +79,7 @@ function onClickTemplateOptions(t: Template) {
           @create:song="onCreateSong"
           @update:song="onUpdateSong"
           @delete:song="onDeleteSong"
+          @update:tab="onChangeTab"
         />
       </v-col>
 
@@ -87,6 +93,7 @@ function onClickTemplateOptions(t: Template) {
 
       <v-col cols="12" sm="3">
         <GlobalOptions v-if="optionsModel === 'global'" @click-download="onClickDownload" />
+        <p v-else>{{ optionsModel }}</p>
       </v-col>
     </v-row>
   </v-container>

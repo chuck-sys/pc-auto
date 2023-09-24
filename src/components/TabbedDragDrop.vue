@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ref, inject } from 'vue';
+import { ref, watch, inject } from 'vue';
 import DraggableSongCard from './DraggableSongCard.vue';
 import CreateSongDialog from './CreateSongDialog.vue';
 import EditSongDialog from './EditSongDialog.vue';
+import type { Ref } from 'vue';
 import type { Song, Scripture } from '../store';
+import type { Options } from '../options';
 
 let showCreateSongDialog = ref(false);
 let showEditSongDialog = ref(false);
@@ -16,9 +18,10 @@ let emit = defineEmits<{
   (event: 'update:song', i: number, newSong: Song): void;
   (event: 'update:scriptures', newValue: Scripture[]): void;
   (event: 'delete:song', i: number): void;
+  (event: 'update:tab', newTab: Options): void;
 }>();
 
-let tab = ref('liturgy');
+let tab: Ref<Options> = ref('liturgy');
 
 function onCreateSong(newSong: Song) {
   emit('create:song', newSong);
@@ -41,6 +44,10 @@ function onClickSong(i: number) {
 
   showEditSongDialog.value = true;
 }
+
+watch(tab, (newTab: Options, _oldTab: Options) => {
+  emit('update:tab', newTab);
+});
 </script>
 
 <template>
